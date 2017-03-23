@@ -1,6 +1,17 @@
-<<<<<<< HEAD
-# blmx_mysql
-This repository contains sample java application using ClearDB - MySQL service
-=======
-# lbycldsfinals
->>>>>>> c56e58886a54b9044974dc74fbf052832aa32724
+# Rainfall
+===
+Rainfall is Cloud-based Storage that uses IBM Services such as ClearDB, and Object Storage.
+
+# Technologies
+===
+1. Bootstrap
+2. JSP
+3. Object Storage
+4. ClearDB
+
+# How to use?
+===
+1.) Overview of your application.
+2.) What are the technology used.
+3.) How to deploy it in Bluemix.
+
