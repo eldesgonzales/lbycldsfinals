@@ -5,20 +5,16 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Map;
 
+import net.tutorial.beans.User;
+
 public class DBService {
-
-	public static final int INSERT_RECORD = 1;
-	public static final int UPDATE_RECORD = 2;
-
 	private static DBService instance = new DBService();
-	Connection dbConnection = null;
-	private PreparedStatement ps = null;
+	public  Connection dbConnection = null;
+	private static PreparedStatement ps = null;
 
-	private DBService() {
+	protected DBService() {
 		createTable();
 	}
 
@@ -26,38 +22,8 @@ public class DBService {
 		return instance;
 	}
 
-	public ArrayList<Map<String, Object>> allRecords() {
 
-		this.dbConnection = getConnection();
-
-		ArrayList<Map<String, Object>> records = new ArrayList<Map<String, Object>>();
-		Map<String, Object> record = null;
-		String sSQL = "SELECT _id, name, email, mobile " + "FROM `contacts`";
-
-		ResultSet rs = null;
-
-		try {
-			ps = this.dbConnection.prepareStatement(sSQL);
-			rs = ps.executeQuery(sSQL);
-
-			while (rs.next()) {
-				record = new HashMap<String, Object>();
-				record.put("_id", rs.getInt("_id"));
-				record.put("name", rs.getString("name"));
-				record.put("email", rs.getString("email"));
-				record.put("mobile", rs.getString("mobile"));
-				records.add(record);
-			}
-		} catch (SQLException e) {
-			System.out.println(e.getMessage());
-		} finally {
-			cleanUp();
-		}
-
-		return records;
-	}
-
-	private void cleanUp() {
+	public void cleanUp() {
 		try {
 			if (ps != null) {
 				ps.close();
@@ -70,7 +36,7 @@ public class DBService {
 		}
 	}
 
-	private Connection getConnection() {
+	static Connection getConnection() {
 		Connection dbConnection = null;
 
 		try {
@@ -95,14 +61,28 @@ public class DBService {
 		return dbConnection;
 	}
 
+	// initialization
 	private void createTable() {
 		this.dbConnection = getConnection();
 
-		String createTableSQL = "CREATE TABLE IF NOT EXISTS `contacts` (" + "`_id` int(11) NOT NULL AUTO_INCREMENT,"
-				+ "`name` varchar(45) DEFAULT NULL," + "`email` varchar(45) DEFAULT NULL,"
-				+ "`mobile` varchar(45) DEFAULT NULL," + "PRIMARY KEY (`_id`)"
-				+ ") ENGINE=InnoDB DEFAULT CHARSET=utf8;";
-
+		String createTableSQL = "CREATE TABLE IF NOT EXISTS `user` (" + "`userid` int(11) NOT NULL AUTO_INCREMENT,"
+				+ "`username` varchar(45) DEFAULT NULL," + "`password` varchar(45) DEFAULT NULL," + "PRIMARY KEY (`userid`),"
+				+ " UNIQUE INDEX `username_UNIQUE` (`username` ASC)) ENGINE=InnoDB DEFAULT CHARSET=utf8;";
+		//System.out.println(createTableSQL);
+		
+		try {
+			ps = this.dbConnection.prepareStatement(createTableSQL);
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		createTableSQL = "CREATE TABLE IF NOT EXISTS `file` (" + "`fileid` int(11) NOT NULL AUTO_INCREMENT,"
+				+ "`filename` varchar(45) DEFAULT NULL," + "`userid` varchar(45) DEFAULT NULL,"
+				+ "`timestamp` timestamp DEFAULT CURRENT_TIMESTAMP," + "`visible` varchar(45) DEFAULT 'true'," 
+				+ "PRIMARY KEY (`fileid`)"+ ") ENGINE=InnoDB DEFAULT CHARSET=utf8;";		
+		//System.out.println(createTableSQL);
+		
 		try {
 			ps = this.dbConnection.prepareStatement(createTableSQL);
 			ps.executeUpdate();
@@ -111,75 +91,5 @@ public class DBService {
 		} finally {
 			cleanUp();
 		}
-	}
-
-	public void deleteRecord(int id) {
-		this.dbConnection = getConnection();
-
-		try {
-			String sSQL = "DELETE FROM `contacts` WHERE _id=?";
-			ps = this.dbConnection.prepareStatement(sSQL);
-			ps.setInt(1, id);
-			ps.executeUpdate();
-		} catch (SQLException e) {
-			System.out.println(e.getMessage());
-		} finally {
-			cleanUp();
-		}
-	}
-
-	public Map<String, Object> findRecord(int id) {
-		this.dbConnection = getConnection();
-		
-		Map<String, Object> record = new HashMap<String, Object>();
-		ResultSet rs = null;
-
-		try {
-			String sSQL = "SELECT * FROM `contacts` WHERE _id=?";
-			ps = this.dbConnection.prepareStatement(sSQL);
-			ps.setInt(1, id);
-			rs = ps.executeQuery();
-			if (rs.next()) {
-				record.put("_id", rs.getInt("_id"));
-				record.put("name", rs.getString("name"));
-				record.put("email", rs.getString("email"));
-				record.put("mobile", rs.getString("mobile"));
-			}
-
-			rs.close();
-		} catch (SQLException e) {
-			System.out.println(e.getMessage());
-		} finally {
-			cleanUp();
-		}
-		return record;
-	}
-
-	public void updateRecord(int transaction, Map<String, Object> record) {
-		this.dbConnection = getConnection();
-
-		String sSQL = null;
-
-		if (transaction == UPDATE_RECORD) {
-			sSQL = "UPDATE `contacts` " + "SET name = ? , email = ? , mobile = ? " + "WHERE _id = ?";
-		} else {
-			sSQL = "INSERT INTO `contacts`" + "(`name`, `email`, `mobile`) VALUES" + "(?,?,?)";
-		}
-
-		try {
-			ps = this.dbConnection.prepareStatement(sSQL);
-			ps.setString(1, (String) record.get("name"));
-			ps.setString(2, (String) record.get("email"));
-			ps.setString(3, (String) record.get("mobile"));
-			if (transaction == UPDATE_RECORD) {
-				ps.setInt(4, (int) record.get("_id"));
-			}
-			ps.executeUpdate();
-		} catch (SQLException e) {
-			System.out.println(e.getMessage());
-		} finally {
-			cleanUp();
-		}
-	}
-
+	}	
 }

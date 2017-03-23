@@ -18,7 +18,7 @@ check.dependsOn.remove(test) // Skip Testing
 
 task deployToJetty(type: Copy) {
 	from 'build/libs'
-	into 'C:/jetty/webapps/'
+	into 'C:/Users/ELDES/Desktop/LBYCLDS/jetty-distribution-9.4.2.v20170220/webapps/'
 	include '*.war'
 }
 
