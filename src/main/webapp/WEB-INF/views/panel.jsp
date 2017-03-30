@@ -6,8 +6,9 @@
 	<%@ include file="header.jsp" %>
   <body>
 	 <div id="service">
-	 	<div class="container">
 	 		<c:if test="${empty files}"><h5>You don't have any files that has been stored here. Upload below!</h5></c:if>
+	 	<div class="container">
+	 		
 	 		<c:if test="${!empty files}"><h3>My Files</h3>
 		 		<div class="hline"></div>
 		 		<div class="spacing"></div>
@@ -16,16 +17,16 @@
 			    <thead>
 			      <tr>
 			        <th>Filename</th>
-			        <th>Timestamp</th>
+			        <th></th>
 			        <th></th>
 			      </tr>
 			    </thead>
 			    <tbody>
 			    	<c:forEach items="${files}" var="f">
 				      <tr>
-				        <td>${f.filename}</td>
-				        <td>${f.timestamp}</td>
-				        <td><button type="submit" class="btn btn-theme" id="${f.fileid}" class="delete">Delete</button></td>
+				        <td width="80%">${f}</td>
+				        <td><button type="submit" class="btn btn-theme" onclick="window.location.href = 'download?id=${f}'">Download</button></td>
+				        <td><button type="submit" class="btn btn-theme" onclick="window.location.href = 'delete?id=${f}'">Delete</button></td>
 				      </tr>
 				    </c:forEach>
 			    </tbody>
@@ -37,8 +38,8 @@
 	 		<div class="hline"></div>
 	 		<div class="spacing"></div>
 
-	 		<form action="" method="post">
-				<input class="btn btn-theme" type="file" name="upload" style="width: 100%">
+	 		<form action="upload" method="post" enctype="multipart/form-data">
+	 			<input class="btn btn-theme" style="width: 100%" type="file" name="file">
 				<div class="wrapper">
 					<button type="submit" class="btn btn-theme" id="upload" class="upload" style="margin-left: 47%">Upload File</button>
 				</div>

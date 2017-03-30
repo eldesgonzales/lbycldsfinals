@@ -10,7 +10,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <link rel="shortcut icon" href="assets/ico/favicon.ico">
-
+	
     <title>LBYCLDS Finals Demo</title>
 	
     <!-- Bootstrap core CSS -->
@@ -44,7 +44,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="index.html">Rainfall</a>
+          <a class="navbar-brand" href="home">Rainfall</a>
         </div>
         <div class="navbar-collapse collapse navbar-right">
           <ul class="nav navbar-nav">
