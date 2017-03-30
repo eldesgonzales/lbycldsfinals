@@ -12,7 +12,7 @@ Rainfall is Cloud-based Storage that uses IBM Services such as ClearDB, and Obje
 # How to use?
 1. Clone the app
 
-### Clear DB ###
+### A. Clear DB ###
 1. Login to https://console.ng.bluemix.net and click "Create Service"
 2. Search "ClearDB", and set it into "leave unbound"
 3. Go to ClearDB's Dashboard.
@@ -28,7 +28,7 @@ Rainfall is Cloud-based Storage that uses IBM Services such as ClearDB, and Obje
   
 >`creds.put("jdbcUrl", "jdbc:mysql://[HOSTNAME]/[SCHEMA]?user=[USERNAME]&password=[PASSWORD]");`
 
-### Object Storage ###
+### B. Object Storage ###
 1. Go back to the dashboard and click "Create Service"
 2. Search "Object Storage" under the Storage, and set it into "leave unbound"
 3. Once created, click on the service
@@ -56,7 +56,7 @@ Rainfall is Cloud-based Storage that uses IBM Services such as ClearDB, and Obje
 
 10. Build the gradle
 
-### Deploy into Bluemix ###
+### C. Deploy into Bluemix ###
 1. Open the command prompt and go to __lbycldsfinals__ directory
 2. Put this command:
   
