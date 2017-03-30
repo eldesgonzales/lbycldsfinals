@@ -15,10 +15,8 @@ import javax.servlet.http.HttpSession;
 import net.tutorial.beans.File;
 import net.tutorial.beans.User;
 import net.tutorial.utilities.DBService;
-import net.tutorial.utilities.UserService;
-import net.tutorial.utilities.FileService;
 
-@WebServlet(urlPatterns={"/", "/home", "/register", "/login", "/logout", "/delete", "/files", "/upload"})
+@WebServlet({"/", "/home", "/register", "/login", "/logout", "/delete", "/files", "/upload"})
 public class MainController extends HttpServlet {
 	/**
 	 * 
@@ -44,27 +42,10 @@ public class MainController extends HttpServlet {
 		*/
 		User u = new User();
 		File f = new File();
-		UserService userServe = new UserService();
-		FileService fileServe = new FileService();
+/*		UserService userServe = new UserService();
+		FileService fileServe = new FileService();*/
 /*
-		if (param != null && param.equals("new")) {
-			viewName = "contact";
-		} else if (param != null && param.equals("edit")) {
-
-			viewName = "contact";
-			db = DBService.getInstance();
-			req.setAttribute("document", db.findRecord(Integer.parseInt(id)));
-
-		} else {
-
-			db = DBService.getInstance();
-
-			if (param != null && id != null && param.equals("delete")) {
-				db.deleteRecord(Integer.parseInt(id));
-			}
-
-			req.setAttribute("contacts", db.allRecords());
-		}*/
+			db = DBService.getInstance();*/
 
 		switch (action){
 			case "/":
@@ -80,35 +61,40 @@ public class MainController extends HttpServlet {
 					getServletContext().getRequestDispatcher("/files").forward(req, resp);
 				break;
 			case "/register":	
+				db = DBService.getInstance();
+				
 				u.setUsername(req.getParameter("username"));
 				u.setPassword(req.getParameter("password"));
 
-				int accountid = userServe.addUser(u);
+				int accountid = db.addUser(u);
 				
-				u = userServe.displayUser(accountid);
+				u = db.displayUser(accountid);
 				u.getUserid();
 				session.setAttribute("member", u);
 				
 				break;
 			case "/login":			
+				db = DBService.getInstance();
+				
 				u.setUsername(req.getParameter("username"));
 				u.setPassword(req.getParameter("password"));
 
-				User u2 = userServe.checkLogin(u,0);
+				User u2 = db.checkLogin(u,0);
 				if (u2.getUsername() != null){
 					verified = true;
-					u = userServe.displayUser(u2.getUserid());
+					u = db.displayUser(u2.getUserid());
 					session.setAttribute("member", u2);
 				}
 				
 				pw.write(String.valueOf(verified));
 				break;
-			case "/delete":
-				u = userServe.checkLogin((User) session.getAttribute("member"),1);
+/*			case "/delete":
+				db = DBService.getInstance();
+				u = db.checkLogin((User) session.getAttribute("member"),1);
 				System.out.println(u);
 				
 				if (u != null){
-					fileServe.deleteFile(req.getParameter("id"));
+					d.deleteFile(req.getParameter("id"));
 					
 					pw.write("success");
 					//getServletContext().getRequestDispatcher("/WEB-INF/views/panel.jsp").forward(req, resp);					
@@ -140,29 +126,13 @@ public class MainController extends HttpServlet {
 					getServletContext().getRequestDispatcher("/WEB-INF/views/panel.jsp").forward(req, resp);
 				} else
 					getServletContext().getRequestDispatcher("/WEB-INF/views/index.jsp").forward(req, resp);
-				break;
+				break;*/
 			case "/logout":
 				req.getSession(false).invalidate();
 				getServletContext().getRequestDispatcher("/WEB-INF/views/index.jsp").forward(req, resp);
 				
 				break;//*/
 		}
-		//getServletContext().getRequestDispatcher("/WEB-INF/views/index.jsp").forward(req, resp);		
-		
-		
-/*		String id = req.getParameter("id");
-		String name = req.getParameter("name");
-		String email = req.getParameter("email");
-		String mobile = req.getParameter("mobile");
-
-		Map<String, Object> record = new HashMap<String, Object>();
-		DBService db = DBService.getInstance();
-
-		record.put("name", name);
-		record.put("email", email);
-		record.put("mobile", mobile);
-
-		resp.sendRedirect("home");*/
 	}
 
 }

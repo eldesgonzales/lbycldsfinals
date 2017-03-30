@@ -43,7 +43,7 @@ public class EnvVariables {
 			
 			creds.put("jdbcUrl", serviceCreds.get("jdbcUrl").toString());
 		} else {
-			creds.put("jdbcUrl", "jdbc:mysql://us-cdbr-iron-east-03.cleardb.net/ad_f27ccceeba6932c?user=b9a9903b63fae3&password=2921c089"); // Put username here if you are testing in local
+			creds.put("jdbcUrl", "jdbc:mysql://us-cdbr-iron-east-03.cleardb.net/ad_168a37774228b80?user=bc2867bbe64153&password=836091b7"); // Put username here if you are testing in local
 		}
 		
 		return creds;
