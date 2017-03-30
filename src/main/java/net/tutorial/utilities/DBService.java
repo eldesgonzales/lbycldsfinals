@@ -6,9 +6,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Map;
 
+import net.tutorial.beans.File;
 import net.tutorial.beans.User;
 
 public class DBService {
@@ -80,8 +80,8 @@ public class DBService {
 			e.printStackTrace();
 		} 
 		
-		createTableSQL = "CREATE TABLE IF NOT EXISTS `file` (" + "`fileid` int(11) NOT NULL AUTO_INCREMENT,"
-				+ "`filename` varchar(45) DEFAULT NULL," + "`userid` varchar(45) DEFAULT NULL,"
+		createTableSQL = "CREATE TABLE IF NOT EXISTS `files` (" + "`fileid` int(11) NOT NULL AUTO_INCREMENT,"
+				+ "`filename` varchar(45) DEFAULT NULL," + "`userid` int(11) DEFAULT NULL,"
 				+ "`timestamp` timestamp DEFAULT CURRENT_TIMESTAMP," + "`visible` varchar(45) DEFAULT 'true'," 
 				+ "PRIMARY KEY (`fileid`)"+ ") ENGINE=InnoDB DEFAULT CHARSET=utf8;";	
 		System.out.println(createTableSQL);
@@ -96,42 +96,34 @@ public class DBService {
 	}
 
 	/* ALL FUNCTIONS HERE */
-	// verify verified user un
-	public User checkLogin(User u, int filter) {
-		this.dbConnection = getConnection();
-		System.out.println(u.getUserid() + " checklogin");
-		User user = new User();
-		String mode = "";
-		boolean status = false;
-
-		if (filter == 0) //login
-			mode = User.COLUMN_USERNAME + "=? AND " + User.COLUMN_PASSWORD + "=?";
-		else // if reconfirmation if sya tlga un
-			mode = User.COLUMN_USERID + "=?";
+	// checks if tama ung credentials
+	public User checkLogin(User u) {
+		User u2 = new User();
 		
-		String sql = "SELECT * FROM " + User.TABLE_NAME + " WHERE " + mode;
+		this.dbConnection = getConnection();
+		boolean verified = false;
+		
+		String sql = "SELECT * FROM " + User.TABLE_NAME + " WHERE " + User.COLUMN_USERNAME + "=? AND " + User.COLUMN_PASSWORD + "=?";
 		System.out.println(sql);
 		
 		ResultSet rs = null;
 
 		try {
 			ps = this.dbConnection.prepareStatement(sql);
-			
-			if (filter == 0) {
-				ps.setString(1, u.getUsername());
-				ps.setString(2, u.getPassword());
-			} else
-				ps.setInt(1, u.getUserid());
-			
+			ps.setString(1, u.getUsername());
+			ps.setString(2, u.getPassword());
+
 			rs = ps.executeQuery();
 			
-			while(rs.next()){
-				user.setUserid(rs.getInt(User.COLUMN_USERID));
-				status = true;
+			while (rs.next()){
+				verified = true;
+				u2.setUserid(rs.getInt(User.COLUMN_USERID));
+				u2.setUsername(rs.getString(User.COLUMN_USERNAME));
 			}
 			
-			if (status == false)
-				user = null;
+			if (!verified)
+				u2 = null;
+			
 			rs.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -139,7 +131,7 @@ public class DBService {
 			cleanUp();
 		}
 		
-		return user;
+		return u2;
 	}	
 	
 	// register
@@ -192,7 +184,7 @@ public class DBService {
 	public boolean checkExists(String id) {
 		this.dbConnection = getConnection();
 		
-		boolean unique = true;
+		boolean unique = false;
 				
 		String sql = "SELECT * FROM " + User.TABLE_NAME + " WHERE " + User.COLUMN_USERNAME  + " = ?";
 		System.out.println(sql);
@@ -201,12 +193,15 @@ public class DBService {
 		try {
 			ps = this.dbConnection.prepareStatement(sql);
 			ps.setString(1, id);
-
+			rs = ps.executeQuery();
+			
 			unique = rs.next();
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			cleanUp();
 		}
-				
+		
 		return unique;
 	}	
 	
@@ -217,7 +212,7 @@ public class DBService {
 		
 		String sql = "SELECT " + User.COLUMN_USERNAME + ", "+ User.COLUMN_USERID + " FROM " + User.TABLE_NAME + " WHERE " + User.COLUMN_USERID + " = ?";
 		System.out.println(sql);
-		System.out.println(id);
+
 		ResultSet rs = null;
 
 		try {
@@ -240,6 +235,82 @@ public class DBService {
 		return u;
 	}	
 	
-	//
+	// display files
+	public ArrayList<File> displayFiles(int id) {
+		this.dbConnection = getConnection();
+
+		ArrayList<File> fileList = new ArrayList<File>();
+		String sql = "SELECT * FROM files WHERE userid=?";
+		//SELECT * FROM " + File.TABLE_NAME + " WHERE " + File.COLUMN_VISIBLE + " = 'true' AND " 
+		// + File.COLUMN_USERID + " = ? 
+		System.out.println(sql);
+		
+		ResultSet rs = null;
+
+		try {
+			ps = this.dbConnection.prepareStatement(sql);
+			ps.setInt(1, id);
+			rs = ps.executeQuery(sql);
+
+			while (rs.next()) {
+				File f = new File();
+				
+				f.setFileid(rs.getString(File.COLUMN_FILEID));
+				f.setFilename(rs.getString(File.COLUMN_FILENAME));
+				f.setTimestamp(rs.getString(File.COLUMN_TIMESTAMP));
+				f.setUserId(rs.getInt(File.COLUMN_USERID));
+				
+				fileList.add(f);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			cleanUp();
+		}
+
+		return fileList;
+	}	
+	
+	// upload file
+	public void addFile(File f){
+		this.dbConnection = getConnection();
+		
+		String sql = "INSERT INTO " + File.TABLE_NAME + "(" + File.COLUMN_FILENAME + ", " + File.COLUMN_USERID
+				+ ") VALUES (?,?)";
+		System.out.println(sql);
+		
+		try {
+			ps = this.dbConnection.prepareStatement(sql);
+			
+			ps.setString(1, f.getFilename());
+			ps.setInt(2, f.getUserId());
+			
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			cleanUp();
+		}
+	}
+	
+	// delete File
+	public void deleteFile(String id) {
+		this.dbConnection = getConnection();
+
+		String sql = "UPDATE FROM " + File.TABLE_NAME + "SET " + File.COLUMN_VISIBLE + " = `false` WHERE " 
+				+ File.COLUMN_FILEID + " =?";
+		System.out.println(sql);
+		
+		try {
+			ps = this.dbConnection.prepareStatement(sql);
+			ps.setString(1, id);
+			this.ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			cleanUp();
+		}
+
+	}
 
 }

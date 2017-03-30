@@ -5,7 +5,7 @@ import java.io.Serializable;
 public class File implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
-	public static final String TABLE_NAME = "file";
+	public static final String TABLE_NAME = "files";
 	public static final String COLUMN_FILEID = "fileid";
 	public static final String COLUMN_FILENAME = "filename";
 	public static final String COLUMN_USERID = "userid";

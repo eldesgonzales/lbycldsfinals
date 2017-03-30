@@ -12,11 +12,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.google.gson.Gson;
+
 import net.tutorial.beans.File;
 import net.tutorial.beans.User;
 import net.tutorial.utilities.DBService;
 
-@WebServlet({"/", "/home", "/register", "/login", "/logout", "/delete", "/files", "/upload"})
+@WebServlet({"", "/home", "/register", "/login", "/logout", "/delete", "/files", "/upload"})
 public class MainController extends HttpServlet {
 	/**
 	 * 
@@ -35,20 +37,19 @@ public class MainController extends HttpServlet {
 		HttpSession session = req.getSession(true);
 		String action = req.getServletPath();
 		PrintWriter pw = resp.getWriter();
-		boolean verified = false;
-/*		String param = req.getParameter("action");
-		String id = req.getParameter("id");
-		String viewName = "index";
-		*/
+				
+		Gson gson = new Gson();
+		String out = "";
+
 		User u = new User();
 		File f = new File();
 /*		UserService userServe = new UserService();
 		FileService fileServe = new FileService();*/
-/*
-			db = DBService.getInstance();*/
+		
+		db = DBService.getInstance();
 
 		switch (action){
-			case "/":
+			case "":
 				if (session.getAttribute("member") == null)
 					getServletContext().getRequestDispatcher("/WEB-INF/views/index.jsp").forward(req, resp);
 				else
@@ -61,75 +62,68 @@ public class MainController extends HttpServlet {
 					getServletContext().getRequestDispatcher("/files").forward(req, resp);
 				break;
 			case "/register":	
-				db = DBService.getInstance();
+				boolean notUnique = db.checkExists(req.getParameter("username")); // unique sya
 				
 				u.setUsername(req.getParameter("username"));
 				u.setPassword(req.getParameter("password"));
 
-				int accountid = db.addUser(u);
-				
-				u = db.displayUser(accountid);
-				u.getUserid();
-				session.setAttribute("member", u);
-				
-				break;
-			case "/login":			
-				db = DBService.getInstance();
-				
-				u.setUsername(req.getParameter("username"));
-				u.setPassword(req.getParameter("password"));
-
-				User u2 = db.checkLogin(u,0);
-				if (u2.getUsername() != null){
-					verified = true;
-					u = db.displayUser(u2.getUserid());
-					session.setAttribute("member", u2);
+				if (!notUnique) {
+					int accountid = db.addUser(u);
+					
+					u = db.displayUser(accountid);
+					u.getUserid();
+					session.setAttribute("member", u);
 				}
 				
-				pw.write(String.valueOf(verified));
+				out = gson.toJson(notUnique);
+				pw.write(out);	
 				break;
-/*			case "/delete":
-				db = DBService.getInstance();
-				u = db.checkLogin((User) session.getAttribute("member"),1);
+			case "/login":						
+				u.setUsername(req.getParameter("username"));
+				u.setPassword(req.getParameter("password"));
+
+				User u2 = db.checkLogin(u);
+				if (u2 != null){
+					u = db.displayUser(u2.getUserid());
+					session.setAttribute("member", u);
+					
+					out = gson.toJson(u);
+				} else
+					out = gson.toJson(null);
+				
+				pw.write(out);
+				break;
+			case "/delete":
+				u = (User) session.getAttribute("member");
+
 				System.out.println(u);
 				
-				if (u != null){
-					d.deleteFile(req.getParameter("id"));
-					
-					pw.write("success");
-					//getServletContext().getRequestDispatcher("/WEB-INF/views/panel.jsp").forward(req, resp);					
-				} else
-					pw.write("fail");
+				db.deleteFile(req.getParameter("id"));
+
 				break;
 			case "/upload":
-				u = userServe.checkLogin((User) session.getAttribute("member"),1);
+				u = (User) session.getAttribute("member");
 				
-				if (u != null){				
-					f.setFilename(req.getParameter("filename"));
-					f.setUserId(u.getUserid());
-					
-					fileServe.addFile(f);
-					
-					getServletContext().getRequestDispatcher("/files").forward(req, resp);	
-					
-					pw.write("success");
-				} else
-					pw.write("fail");
+				f.setFilename(req.getParameter("filename"));
+				f.setUserId(u.getUserid());
+				
+				db.addFile(f);
+				
+				getServletContext().getRequestDispatcher("/files").forward(req, resp);	
+				
+				pw.write("success");
+
 				break;
 			case "/files":
-				u = userServe.checkLogin((User) session.getAttribute("member"),1);
+				u = (User) session.getAttribute("member");
+				ArrayList<File> fileList = db.displayFiles(u.getUserid());
 				
-				if (u != null){
-					ArrayList<File> fileList = fileServe.displayFiles(u.getUserid());
-					
-					req.setAttribute("files", fileList);
-					getServletContext().getRequestDispatcher("/WEB-INF/views/panel.jsp").forward(req, resp);
-				} else
-					getServletContext().getRequestDispatcher("/WEB-INF/views/index.jsp").forward(req, resp);
-				break;*/
+				req.setAttribute("files", fileList);
+				getServletContext().getRequestDispatcher("/WEB-INF/views/panel.jsp").forward(req, resp);
+				break;
 			case "/logout":
 				req.getSession(false).invalidate();
-				getServletContext().getRequestDispatcher("/WEB-INF/views/index.jsp").forward(req, resp);
+				getServletContext().getRequestDispatcher("home").forward(req, resp);
 				
 				break;//*/
 		}

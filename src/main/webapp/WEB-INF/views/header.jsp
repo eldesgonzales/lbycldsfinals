@@ -48,9 +48,9 @@
         </div>
         <div class="navbar-collapse collapse navbar-right">
           <ul class="nav navbar-nav">
-          	<c:if test="${empty member.username}"><li class="active"><a href="/home">HOME</a></li></c:if>
+          	<c:if test="${empty member.username}"><li class="active"><a href="home">HOME</a></li></c:if>
           	<c:if test="${!empty member.username}"><li><a>Hi, ${member.username}!</a></li>
-			<li class="active"><a href="/logout">LOGOUT</a></li></c:if>
+			<li class="active"><a href="logout">LOGOUT</a></li></c:if>
           </ul>
         </div><!--/.nav-collapse -->
       </div>

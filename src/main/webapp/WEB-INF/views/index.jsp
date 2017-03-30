@@ -51,6 +51,7 @@
 		 			<p>Don't think twice and sign up! We're 99.9% up all the time!</p>
 		 			<p id="w2" style="display:none"><strong>Error:</strong> Passwords do not match.</p>
 		 			<p id="w4" style="display:none"><strong>Error:</strong> There's an error in the server. Please try again.</p>
+		 			<p id="w7" style="display:none"><strong>Error:</strong> Username already taken.</p>
 		 			<p id="w6" style="display:none"><strong>Error:</strong> Please fill up all fields.</p>
 		 			<form role="form" action="" method="POST">
 					  <div class="form-group">
@@ -90,18 +91,17 @@
 				url : "login",
 				method : "post",
 				dataType: 'json',
-				data : { /* data is anong data ipapasa mo sa servlet */
+				data : {
 					username : username,
 					password : password
 				},
-				success : function(message){
-					//console.log(message);
-					if (message == false){
+				success : function(data){
+					if ($.isEmptyObject(data)){
 						$("#w1").show();
 						$("#w3").hide();
 						$("#w5").hide();
-					}  else
-						window.location.href = "panel.jsp";
+					} else
+						window.location.href = "files";
 
 				},
 				error: function(){
@@ -130,20 +130,26 @@
 				url : "register",
 				method : "post",
 				dataType: 'json',
-				data : { /* data is anong data ipapasa mo sa servlet */
+				data : { 
 					username : username,
 					password : password
 				},
-				success : function(message){				
+				success : function(data){
+					var message = $.parseJSON(data);
 					$("#w2").hide();
 					$("#w4").hide();
 					
-					
+					if (message == false){ //unique sya
+						$("#w7").hide();
+						window.location.href = "files";
+					} else 
+						$("#w7").show();
 
 				},
-				error: function(){ // bat nappunta sa error?!
+				error: function(){ 
+					$("#w2").hide();
+					$("#w7").hide();
 					$("#w4").show();
-					window.location.href = "files";
 				}
 			});				
 		}
