@@ -41,6 +41,8 @@ public class EnvVariables {
 	        JSONObject serviceInstance = (JSONObject) serviceConfig.get(0);
 	        JSONObject serviceCreds = (JSONObject) serviceInstance.get("credentials");
 			
+			creds.put("username", serviceCreds.get("username").toString());
+			creds.put("password",  serviceCreds.get("password").toString());
 			creds.put("jdbcUrl", serviceCreds.get("jdbcUrl").toString());
 		} else {
 			creds.put("jdbcUrl", "jdbc:mysql://us-cdbr-iron-east-03.cleardb.net/ad_168a37774228b80?user=bc2867bbe64153&password=836091b7"); // Put username here if you are testing in local

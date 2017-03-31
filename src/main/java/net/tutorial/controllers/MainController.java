@@ -3,6 +3,7 @@ package net.tutorial.controllers;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -21,9 +22,10 @@ import com.google.gson.Gson;
 import net.tutorial.beans.User;
 import net.tutorial.utilities.DBService;
 import net.tutorial.utilities.ObjectStorageService;
+import net.tutorial.utilities.TranslatorService;
 import net.tutorial.utilities.UserService;
 
-@WebServlet({"", "/home", "/register", "/login", "/logout", "/delete", "/files", "/upload", "/download"})
+@WebServlet({"", "/home", "/register", "/login", "/logout", "/delete", "/files", "/upload", "/download", "/translate"})
 @MultipartConfig
 public class MainController extends HttpServlet {
 	/**
@@ -66,9 +68,24 @@ public class MainController extends HttpServlet {
 				else
 					getServletContext().getRequestDispatcher("/files").forward(req, resp);
 				break;
+			case "/translate":						
+				String modelId = req.getParameter("tr-model-id");
+				String[] text = req.getParameterValues("text[]");
+				ArrayList<String> translatedtext = new ArrayList<>();
+				PrintWriter pw = resp.getWriter();
+				TranslatorService lt = new TranslatorService();
+				
+				for (int i = 0; i < text.length; i ++){
+					translatedtext.add(lt.getTranslation(text[i],modelId));					
+				}
+				
+				out = gson.toJson(translatedtext);
+				pw.write(out);
+				pw.close();
+				break;				
 			case "/register":	
 				boolean notUnique = userServe.checkExists(req.getParameter("username")); // unique sya
-				PrintWriter pw = resp.getWriter();
+				pw = resp.getWriter();
 				
 				u.setUsername(req.getParameter("username"));
 				u.setPassword(req.getParameter("password"));

@@ -45,13 +45,23 @@
             <span class="icon-bar"></span>
           </button>
           <a class="navbar-brand" href="home">Rainfall</a>
+		  <div style="float:left; margin-top: 5px;">
+		  	<select name="tr-model-id">
+				<option value="en-ar">English - Arabic</option>
+				<option value="en-fr">English - French</option>
+				<option value="en-pt">English - Portuguese</option>
+				<option value="en-es">English - Spanish</option>
+			</select>
+			<button id="translator" class="btn btn-theme" type="submit">Submit</button>
+		  </div>          
         </div>
         <div class="navbar-collapse collapse navbar-right">
           <ul class="nav navbar-nav">
-          	<c:if test="${empty member.username}"><li class="active"><a href="home">HOME</a></li></c:if>
-          	<c:if test="${!empty member.username}"><li><a>Hi, ${member.username}!</a></li>
-			<li class="active"><a href="logout">LOGOUT</a></li></c:if>
+          	<c:if test="${empty member.username}"><li class="active"><a href="home" class="translate">HOME</a></li></c:if>
+          	<c:if test="${!empty member.username}"><li><a class="translate">Hi, ${member.username}!</a></li>
+			<li class="active"><a href="logout" class="translate">LOGOUT</a></li></c:if>
           </ul>
         </div><!--/.nav-collapse -->
       </div>
     </div>
+    

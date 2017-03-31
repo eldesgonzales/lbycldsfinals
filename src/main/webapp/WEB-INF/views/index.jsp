@@ -10,10 +10,10 @@
 	    <div class="container">
 			<div class="row">
 				<div class="col-lg-8 col-lg-offset-2">
-					<h3>The #1 Storage Platform in Web in 2017</h3>
+					<h3 class="translate">The #1 Storage Platform in Web in 2017</h3>
 					<h1>RAINFALL</h1>
-					<h5>Login below to store your files now!</h5>
-					<button type="button" class="btn btn-theme" onclick="window.location.href='#service'">LOG IN / REGISTER</button>
+					<h5 class="translate">Login below to store your files now!</h5>
+					<button type="button" class="btn btn-theme translate" onclick="window.location.href='#service'">LOG IN / REGISTER</button>
 				</div>
 				<div class="col-lg-8 col-lg-offset-2 himg">
 					<img src="assets/img/browser.png" class="img-responsive">
@@ -26,47 +26,47 @@
 	 <div id="service">
 	 	<div class="container">
 	 		<div class="col-lg-6">
-	 			<h4>LOGIN:</h4>
+	 			<h4 class="translate">LOGIN:</h4>
 	 			<div class="hline"></div>
-		 			<p>Want to back up your files, old user?</p>
-		 			<p id="w1" style="display:none"><strong>Error:</strong> Incorrect username/password.</p>
-		 			<p id="w3" style="display:none"><strong>Error:</strong> There's an error in the server. Please try again.</p>
-		 			<p id="w5" style="display:none"><strong>Error:</strong> Please fill up both fields.</p>
+		 			<p class="translate">Want to back up your files, old user?</p>
+		 			<p id="w1" style="display:none" class="translate"><strong>Error:</strong> Incorrect username/password.</p>
+		 			<p id="w3" style="display:none" class="translate"><strong>Error:</strong> There's an error in the server. Please try again.</p>
+		 			<p id="w5" style="display:none" class="translate"><strong>Error:</strong> Please fill up both fields.</p>
 		 			<form role="form" action="" method="POST">
 					  <div class="form-group">
-					    <label for="lusername">Username:</label>
+					    <label for="lusername" class="translate">Username:</label>
 					    <input type="text" class="form-control" name="lusername" id="lusername">
 					  </div>
 					  <div class="form-group">
-					  	<label for="lpassword">Password:</label>
+					  	<label for="lpassword" class="translate">Password:</label>
 					  	<input type="password" class="form-control" name="lpassword" id="lpassword">
 					  </div>
-					  <button type="submit" class="btn btn-theme" id="sign-in">Log me in!</button>
+					  <button type="submit" class="btn btn-theme" id="sign-in" class="translate">Log me in!</button>
 					</form>
 			</div><! --/col-lg-8 -->
 	 		
 	 		<div class="col-lg-6">
-	 			<h4>REGISTER:</h4>
+	 			<h4 class="translate">REGISTER:</h4>
 	 			<div class="hline"></div>
-		 			<p>Don't think twice and sign up! We're 99.9% up all the time!</p>
-		 			<p id="w2" style="display:none"><strong>Error:</strong> Passwords do not match.</p>
-		 			<p id="w4" style="display:none"><strong>Error:</strong> There's an error in the server. Please try again.</p>
-		 			<p id="w7" style="display:none"><strong>Error:</strong> Username already taken.</p>
-		 			<p id="w6" style="display:none"><strong>Error:</strong> Please fill up all fields.</p>
+		 			<p class="translate">Don't think twice and sign up! We're 99.9% up all the time!</p>
+		 			<p id="w2" style="display:none" class="translate"><strong>Error:</strong> Passwords do not match.</p>
+		 			<p id="w4" style="display:none" class="translate"><strong>Error:</strong> There's an error in the server. Please try again.</p>
+		 			<p id="w7" style="display:none" class="translate"><strong>Error:</strong> Username already taken.</p>
+		 			<p id="w6" style="display:none" class="translate"><strong>Error:</strong> Please fill up all fields.</p>
 		 			<form role="form" action="" method="POST">
 					  <div class="form-group">
-					    <label for="username">Username:</label>
+					    <label for="username" class="translate">Username:</label>
 					    <input type="email" class="form-control" name="username" id="username" required>
 					  </div>
 					  <div class="form-group">
-					    <label for="password">Password: </label>
+					    <label for="password" class="translate">Password: </label>
 					    <input type="email" class="form-control" name="password" id="password" required>
 					  </div>
 					  <div class="form-group">
-					    <label for="password2">Re-enter Password:</label>
+					    <label for="password2" class="translate">Re-enter Password:</label>
 					    <input type="email" class="form-control" name="password2" id="password2" required>
 					  </div>
-					  <button type="submit" class="btn btn-theme" id="sign-up">Sign me up!</button>
+					  <button type="submit" class="btn btn-theme translate" id="sign-up">Sign me up!</button>
 					</form>
 			</div><! --/col-lg-8 -->
 	 	</div><! --/container -->

@@ -8,12 +8,12 @@
 	 	<div class="container">
 		 	<div class="row">
 		 		<div class="col-lg-4">
-		 			<h4>Created by</h4>
+		 			<h4 class="translate">Created by</h4>
 		 			<div class="hline-w"></div>
 		 			<p>Eldes N. Gonzales (11341289)</p>
 		 		</div>
 		 		<div class="col-lg-4">
-		 			<h4>Social Links</h4>
+		 			<h4 class="translate">Social Links</h4>
 		 			<div class="hline-w"></div>
 		 			<p>
 		 				<a href="#"><i class="fa fa-dribbble"></i></a>
@@ -24,7 +24,7 @@
 		 			</p>
 		 		</div>
 		 		<div class="col-lg-4">
-		 			<h4>Our Bunker</h4>
+		 			<h4 class="translate">Our Bunker</h4>
 		 			<div class="hline-w"></div>
 		 			<p>
 		 				Some Ave, 987,<br/>
@@ -131,4 +131,40 @@
 		setPortfolio();          
 	});
 })(jQuery);
+</script>
+
+<script>
+// for translation
+	$("#translator").click(function(e){
+		e.preventDefault();
+		
+		var texts = $(".translate");
+		var arr = [];
+		for(var i = 0; i < texts.length; i++){
+		    arr.push($(texts[i]).text());
+		}
+
+ 		$.ajax({
+			url : "translate",
+			method : "post",
+			dataType: 'json',
+			data : { 
+				text: arr
+			},
+			success : function(data){
+				//var message = $.parseJSON(data);
+				
+				for(var i = 0; i < texts.length; i++){
+				    $(texts[i]).text(data[i]);
+				}
+
+				
+				console.log(data);
+			},
+			error: function(){ 
+				alert("Cannot translate the text. Please try again.");
+			}
+		});	 //*/			
+
+	}); 
 </script>

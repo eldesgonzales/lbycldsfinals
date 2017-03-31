@@ -6,6 +6,7 @@ repositories {
 }
 
 dependencies {
+	compile 'com.ibm.watson.developer_cloud:language-translator:3.5.3'
     compile 'org.pacesys:openstack4j:3.0.0'
     compile 'org.slf4j:slf4j-api:1.7.21'
     compile 'org.slf4j:slf4j-simple:1.7.21'
