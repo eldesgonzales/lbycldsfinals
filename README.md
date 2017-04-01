@@ -56,8 +56,6 @@ Rainfall is Cloud-based Storage that uses IBM Services such as ClearDB, and Obje
 1. Go back to the dashoard and click "Create Service"
 2. Search "ClearDB", and set it into "[LASTNAME]-rainfall"
 
-
 ### D. Language Translator ###
 1. Go to the dashboard, create a Service of Language Translator.
-2. Bind it into your app.
-3. Go to your ClearDB
+2. Bind it into your "[LASTNAME]-rainfall".
