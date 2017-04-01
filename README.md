@@ -1,5 +1,5 @@
 # Rainfall
-Rainfall is Cloud-based Storage that uses IBM Services such as ClearDB, and Object Storage.
+Rainfall is Cloud-based Storage that uses IBM Services such as ClearDB, and Object Storage. It can also translate texts incase the user can't understand English.
 
 # Technologies used
 1. Bootstrap
@@ -8,6 +8,7 @@ Rainfall is Cloud-based Storage that uses IBM Services such as ClearDB, and Obje
 4. JSP
 5. Object Storage
 6. ClearDB
+7. Language Translator
 
 # How to use?
 1. Clone the app
@@ -44,7 +45,7 @@ Rainfall is Cloud-based Storage that uses IBM Services such as ClearDB, and Obje
 8. Go back to the app's project, and find __ObjectStorageService.java__ from net.tutorial.utilities
 9. Find these and change the following (no square brackets, just ""):
   
-  `private static final String USERNAME = [username];
+  `private static final String USERNAME = [username];`
   
 	private static final String PASSWORD = [password];
   
@@ -65,6 +66,8 @@ Rainfall is Cloud-based Storage that uses IBM Services such as ClearDB, and Obje
 3. Input your credentials when prompted
 4. Enter the following command:
   
->`cf push LASTNAME-Rainfall -m 256M -p build/libs/AddressBookAppSQL.war`
+>`cf push [LASTNAME]-Rainfall -m 256M -p build/libs/AddressBookAppSQL.war`
 
-
+### D. Language Translator ###
+1. Go to the dashboard, create a Service of Language Translator.
+2. Bind it into your app.
