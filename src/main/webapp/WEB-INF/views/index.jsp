@@ -41,7 +41,7 @@
 					  	<label for="lpassword" class="translate">Password:</label>
 					  	<input type="password" class="form-control" name="lpassword" id="lpassword">
 					  </div>
-					  <button type="submit" class="btn btn-theme" id="sign-in" class="translate">Log me in!</button>
+					  <button type="submit" class="btn btn-theme translate" id="sign-in">Log me in!</button>
 					</form>
 			</div><! --/col-lg-8 -->
 	 		

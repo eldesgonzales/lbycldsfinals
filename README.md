@@ -13,25 +13,9 @@ Rainfall is Cloud-based Storage that uses IBM Services such as ClearDB, and Obje
 # How to use?
 1. Clone the app
 
-### A. Clear DB ###
+### A. Object Storage ###
 1. Login to https://console.ng.bluemix.net and click "Create Service"
-2. Search "ClearDB", and set it into "leave unbound"
-3. Go to ClearDB's Dashboard.
-4. Click the schema under the "My Databases" table
-5. From the schema, click on the "Endpoint Information" tab
-6. Get the following information:
-    * Schema name: ad_xxxxxxxxxxxxxxx
-    * Hostname: (eg. us-cdbr-iron-east-03.cleardb.net)
-    * Username
-    * Password
-7. Go into the app, and find __EnvVariables.java__ from net.tutorial.utilities
-8. Find `creds.put("jdbcUrl", "jdbc:mysql://us-cdbr-iron-east-03.cleardb.net/ad_168a37774228b80?user=bc2867bbe64153&password=836091b7");` and change it into this format:
-  
->`creds.put("jdbcUrl", "jdbc:mysql://[HOSTNAME]/[SCHEMA]?user=[USERNAME]&password=[PASSWORD]");`
-
-### B. Object Storage ###
-1. Go back to the dashboard and click "Create Service"
-2. Search "Object Storage" under the Storage, and set it into "leave unbound"
+2. Search "Object Storage" under the Storage, and set it into "[LASTNAME]-rainfall"
 3. Once created, click on the service
 4. Click on the "Service Credentials" tab
 5. From the "Service Credentials" tab, click on "New Credential"
@@ -57,7 +41,7 @@ Rainfall is Cloud-based Storage that uses IBM Services such as ClearDB, and Obje
 
 10. Build the gradle
 
-### C. Deploy into Bluemix ###
+### B. Deploy into Bluemix ###
 1. Open the command prompt and go to __lbycldsfinals__ directory
 2. Put this command:
   
@@ -66,8 +50,14 @@ Rainfall is Cloud-based Storage that uses IBM Services such as ClearDB, and Obje
 3. Input your credentials when prompted
 4. Enter the following command:
   
->`cf push [LASTNAME]-Rainfall -m 256M -p build/libs/AddressBookAppSQL.war`
+>`cf push [LASTNAME]-Rainfall -m 256M -p build/libs/AddressBookAppSQL.war -b liberty-for-java_v3_7-20170118-2046 `
+
+### C. Clear DB ###
+1. Go back to the dashoard and click "Create Service"
+2. Search "ClearDB", and set it into "[LASTNAME]-rainfall"
+
 
 ### D. Language Translator ###
 1. Go to the dashboard, create a Service of Language Translator.
 2. Bind it into your app.
+3. Go to your ClearDB
