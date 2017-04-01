@@ -69,7 +69,7 @@ public class MainController extends HttpServlet {
 					getServletContext().getRequestDispatcher("/files").forward(req, resp);
 				break;
 			case "/translate":						
-				String modelId = req.getParameter("tr-model-id");
+				String modelId = req.getParameter("modelid");
 				String[] text = req.getParameterValues("text[]");
 				ArrayList<String> translatedtext = new ArrayList<>();
 				PrintWriter pw = resp.getWriter();

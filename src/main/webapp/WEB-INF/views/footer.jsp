@@ -138,7 +138,7 @@
 	$("#translator").click(function(e){
 		e.preventDefault();
 		
-		var tr-model-id = $("#tr-model-id").val();
+		var modelid = $("#tr-model-id").val();
 		var texts = $(".translate");
 		var arr = [];
 		for(var i = 0; i < texts.length; i++){
@@ -151,7 +151,7 @@
 			dataType: 'json',
 			data : { 
 				text: arr,
-				tr-model-id: 
+				modelid: modelid
 			},
 			success : function(data){
 				//var message = $.parseJSON(data);
@@ -159,9 +159,7 @@
 				for(var i = 0; i < texts.length; i++){
 				    $(texts[i]).text(data[i]);
 				}
-
-				
-				console.log(data);
+				//console.log(data);
 			},
 			error: function(){ 
 				alert("Cannot translate the text. Please try again.");
