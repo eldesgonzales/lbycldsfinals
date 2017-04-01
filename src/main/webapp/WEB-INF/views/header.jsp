@@ -58,7 +58,7 @@
         <div class="navbar-collapse collapse navbar-right">
           <ul class="nav navbar-nav">
           	<c:if test="${empty member.username}"><li class="active"><a href="home" class="translate">HOME</a></li></c:if>
-          	<c:if test="${!empty member.username}"><li><a class="translate">Hi, ${member.username}!</a></li>
+          	<c:if test="${!empty member.username}"><li><a class="translate">Hi,</a><a> ${member.username}!</a></li>
 			<li class="active"><a href="logout" class="translate">LOGOUT</a></li></c:if>
           </ul>
         </div><!--/.nav-collapse -->
