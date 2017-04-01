@@ -20,7 +20,7 @@ Rainfall is Cloud-based Storage that uses IBM Services such as ClearDB, and Obje
 4. Click on the "Service Credentials" tab
 5. From the "Service Credentials" tab, click on "New Credential"
 6. Click add, and it will generate a credential
-7. View the credential and get the following:
+7. View the credentials and get the following:
     * username
     * password
     * domainId
@@ -53,7 +53,7 @@ Rainfall is Cloud-based Storage that uses IBM Services such as ClearDB, and Obje
 >`cf push [LASTNAME]-Rainfall -m 256M -p build/libs/AddressBookAppSQL.war -b liberty-for-java_v3_7-20170118-2046 `
 
 ### C. Clear DB ###
-1. Go back to the dashoard and click "Create Service"
+1. Go back to the dashboard and click "Create Service"
 2. Search "ClearDB", and set it into "[LASTNAME]-rainfall"
 
 ### D. Language Translator ###
