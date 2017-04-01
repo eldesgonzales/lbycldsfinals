@@ -41,7 +41,7 @@
 	 		<form action="upload" method="post" enctype="multipart/form-data">
 	 			<input class="btn btn-theme" style="width: 100%" type="file" name="file">
 				<div class="wrapper">
-					<button type="submit" class="btn btn-theme" id="upload" class="upload translate" style="margin-left: 47%">Upload File</button>
+					<button type="submit" class="btn btn-theme translate" id="upload" class="upload translate" style="margin-left: 47%">Upload File</button>
 				</div>
 			</form>
 			<div class="spacing"></div>
