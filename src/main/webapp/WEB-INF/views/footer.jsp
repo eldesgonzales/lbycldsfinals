@@ -138,6 +138,7 @@
 	$("#translator").click(function(e){
 		e.preventDefault();
 		
+		var tr-model-id = $("#tr-model-id").val();
 		var texts = $(".translate");
 		var arr = [];
 		for(var i = 0; i < texts.length; i++){
@@ -149,7 +150,8 @@
 			method : "post",
 			dataType: 'json',
 			data : { 
-				text: arr
+				text: arr,
+				tr-model-id: 
 			},
 			success : function(data){
 				//var message = $.parseJSON(data);

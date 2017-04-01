@@ -7,15 +7,15 @@ repositories {
 
 dependencies {
 	compile 'com.ibm.watson.developer_cloud:language-translator:3.5.3'
-    compile 'org.pacesys:openstack4j:3.0.0'
-    compile 'org.slf4j:slf4j-api:1.7.21'
-    compile 'org.slf4j:slf4j-simple:1.7.21'
-    testCompile 'junit:junit:4.12'
+	compile 'org.pacesys:openstack4j:3.0.0'
+	compile 'org.slf4j:slf4j-api:1.7.21'
+	compile 'org.slf4j:slf4j-simple:1.7.21'
+	testCompile 'junit:junit:4.12'
 	compile 'mysql:mysql-connector-java:5.1.6'
 	compile 'com.googlecode.json-simple:json-simple:1.1.1'
-    compileOnly 'org.apache.geronimo.specs:geronimo-servlet_3.0_spec:1.0'
-    compileOnly 'javax.servlet:jstl:1.2'
-    compile group: 'com.google.code.gson', name: 'gson', version: '1.7.2'
+	compileOnly 'org.apache.geronimo.specs:geronimo-servlet_3.0_spec:1.0'
+	compileOnly 'javax.servlet:jstl:1.2'
+	compile group: 'com.google.code.gson', name: 'gson', version: '1.7.2'
 }
 
 check.dependsOn.remove(test) // Skip Testing

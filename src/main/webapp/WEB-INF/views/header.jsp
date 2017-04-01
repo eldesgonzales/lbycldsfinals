@@ -46,7 +46,7 @@
           </button>
           <a class="navbar-brand" href="home">Rainfall</a>
 		  <div style="float:left; margin-top: 5px;">
-		  	<select name="tr-model-id">
+		  	<select id="tr-model-id">
 				<option value="en-ar">English - Arabic</option>
 				<option value="en-fr">English - French</option>
 				<option value="en-pt">English - Portuguese</option>
